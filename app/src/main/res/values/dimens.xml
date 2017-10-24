@@ -2,7 +2,7 @@
 <resources>
     <dimen name="linearpadding">20dp</dimen>
     <dimen name="imglogo">150dp</dimen>
-    <dimen name="edittext1">25sp</dimen>
+    <dimen name="edittext1">18sp</dimen>
     <dimen name="edittextpadding">7dp</dimen>
     <dimen name="edittextmargin">5dp</dimen>
 </resources>
