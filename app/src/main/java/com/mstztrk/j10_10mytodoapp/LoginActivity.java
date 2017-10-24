@@ -12,7 +12,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.mstztrk.j10_10mytodoapp.base.BaseActivity;
+import com.mstztrk.j10_10mytodoapp.model.Kisi;
 
 public class LoginActivity extends BaseActivity {
     EditText txtEmail, txtPassword;
@@ -79,6 +85,28 @@ public class LoginActivity extends BaseActivity {
             if (user.isEmailVerified()) {
                 Toast.makeText(LoginActivity.this, "Hoşgeldiniz", Toast.LENGTH_SHORT).show();
                 //ana sayfa açılacak
+                database = FirebaseDatabase.getInstance();
+                myRef = database.getReference().child("users");
+                final Query query = myRef.child(user.getUid());
+                query.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (!dataSnapshot.exists()) {
+                            Kisi kisi = new Kisi();
+                            kisi.setId(user.getUid());
+                            kisi.setEmail(user.getEmail());
+                            myRef.child(user.getUid()).setValue(kisi);
+                        }
+                        query.removeEventListener(this);
+                        hideProgress();
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
             } else {
                 verifyUser();
             }
