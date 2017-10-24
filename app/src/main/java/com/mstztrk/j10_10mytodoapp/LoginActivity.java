@@ -91,6 +91,8 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Toast.makeText(LoginActivity.this, "Posta kutunuzu kontrol ediniz", Toast.LENGTH_SHORT).show();
+                mAuth = FirebaseAuth.getInstance();
+                mAuth.signOut();
             }
         });
     }
