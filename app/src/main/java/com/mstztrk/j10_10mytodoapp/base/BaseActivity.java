@@ -16,7 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class BaseActivity extends AppCompatActivity {
     private final String EMAIL_PATTERN = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
-    private final String PASSWORD_PATTERN = "^(?=.*\\d).{4,8}$";
+    private final String PASSWORD_PATTERN = "^(?=.*\\d).{6,16}$";
     public ProgressDialog mProgressDialog;
     public FirebaseAuth mAuth;
     public FirebaseUser user;
@@ -46,10 +46,10 @@ public class BaseActivity extends AppCompatActivity {
             txtEmail.setError(null);
         }
         if (!password.matches(PASSWORD_PATTERN)) {
-            txtEmail.setError("en az 4 haneli ve rakamla biten bir şifre girmelisiniz");
+            txtPassword.setError("en az 6 haneli ve rakamla biten bir şifre girmelisiniz");
             return false;
         } else {
-            txtEmail.setError(null);
+            txtPassword.setError(null);
         }
 
         return isvalid;
