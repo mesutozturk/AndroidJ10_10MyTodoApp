@@ -13,4 +13,8 @@
     <string name="action_settings">Settings</string>
     <string name="myprofile">My Profile</string>
     <string name="signout">Sign Out</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="calender">Calender</string>
+    <string name="update">Update</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.mstztrk.j10_10mytodoapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -84,7 +85,7 @@ public class MainActivity extends BaseActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_profile) {
-            // Handle the camera action
+            startActivity(new Intent(MainActivity.this, ProfileActivity.class));
         } else if (id == R.id.nav_signout) {
             mAuth = FirebaseAuth.getInstance();
             mAuth.signOut();

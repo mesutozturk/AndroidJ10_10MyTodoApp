@@ -2,6 +2,7 @@ package com.mstztrk.j10_10mytodoapp.base;
 
 import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
+
 import android.text.TextUtils;
 import android.widget.EditText;
 
