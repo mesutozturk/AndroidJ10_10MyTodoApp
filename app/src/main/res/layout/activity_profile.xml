@@ -3,11 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="@dimen/linearpadding"
     tools:context="com.mstztrk.j10_10mytodoapp.ProfileActivity">
 
+    <ImageView
+        android:id="@+id/profile_imgProfile"
+        app:srcCompat="@android:drawable/ic_menu_camera"
+        android:layout_width="@dimen/pphoto"
+        android:layout_height="@dimen/pphoto"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:scaleType="fitXY" />
 
     <EditText
         android:id="@+id/profile_txtName"

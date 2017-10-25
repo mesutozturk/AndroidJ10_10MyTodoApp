@@ -2,11 +2,14 @@ package com.mstztrk.j10_10mytodoapp;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,6 +20,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.mstztrk.j10_10mytodoapp.base.BaseActivity;
 import com.mstztrk.j10_10mytodoapp.model.Kisi;
+import com.myhexaville.smartimagepicker.ImagePicker;
+import com.myhexaville.smartimagepicker.OnImagePickedListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -29,6 +34,8 @@ public class ProfileActivity extends BaseActivity {
     Button btnUpdate, btnCalender;
     Kisi currentUser;
     Date selectedDate;
+    ImageView imgProfile;
+    ImagePicker imagePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +100,6 @@ public class ProfileActivity extends BaseActivity {
                                           int dayOfMonth) {
                         selectedDate = new Date(year - 1900, monthOfYear, dayOfMonth);
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MM yyyy");
-
                         txtBirthdate.setText(simpleDateFormat.format(selectedDate));
                     }
                 }, year, month, day);
@@ -132,5 +138,35 @@ public class ProfileActivity extends BaseActivity {
                 finish();
             }
         });
+        imgProfile = (ImageView) findViewById(R.id.profile_imgProfile);
+        imgProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                refreshImagePicker();
+                imagePicker.choosePicture(true);
+            }
+        });
+    }
+
+    private void refreshImagePicker() {
+        imagePicker = new ImagePicker(this, null, new OnImagePickedListener() {
+            @Override
+            public void onImagePicked(Uri imageUri) {
+                imgProfile.setImageURI(imageUri);
+            }
+        });
+        imagePicker.setWithImageCrop(1, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        imagePicker.handleActivityResult(resultCode, requestCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        imagePicker.handlePermission(requestCode, grantResults);
     }
 }

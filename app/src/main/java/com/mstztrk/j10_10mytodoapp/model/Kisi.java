@@ -5,7 +5,7 @@ package com.mstztrk.j10_10mytodoapp.model;
  */
 
 public class Kisi {
-    private String id, name, surname, email, birthDate;
+    private String id, name, surname, email, birthDate, photo;
 
     public String getId() {
         return id;
@@ -13,6 +13,14 @@ public class Kisi {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     public String getName() {

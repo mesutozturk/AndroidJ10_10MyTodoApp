@@ -12,13 +12,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.mstztrk.j10_10mytodoapp.base.BaseActivity;
+import com.mstztrk.j10_10mytodoapp.model.Kisi;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    TextView nav_txtAdsoyad, nav_txtEmail;
+    Kisi currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +52,37 @@ public class MainActivity extends BaseActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View header = navigationView.getHeaderView(0);
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+        if (user == null) finish();
+
+        nav_txtAdsoyad = header.findViewById(R.id.nav_txtAdSoyad);
+        nav_txtEmail = header.findViewById(R.id.nav_txtEmail);
+        navDataDoldur(user.getUid());
+    }
+
+    private void navDataDoldur(String uid) {
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference().child("users");
+        Query query = myRef.child(uid);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                currentUser = dataSnapshot.getValue(Kisi.class);
+                nav_txtAdsoyad.setText(String.format("%s %s", currentUser.getName(), currentUser.getSurname()));
+                nav_txtEmail.setText(currentUser.getEmail());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
